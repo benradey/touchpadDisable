@@ -1,12 +1,15 @@
 # touchpadDisable
-A Python script that monitors for keystrokes and automatically dis-/re-enables the touchpad as appropriate
+A Python script that monitors for keystrokes and automatically dis-/re-enables the touchpad as appropriate.
+Also controls the Legion RGB keyboard!
 
-First, make sure the `touchpadDisable.py` file is owned by root and is read-only to other users. This is because the script reads directly from `/dev/input` which could otherwise enable keylogging and event spoofing.
+[Credit for the l5p_kbl library](https://github.com/imShara/l5p-kbl)
+
+First, make sure the `touchpadDisable.py` and `l5p_kbl.py` files are owned by root and read-only to other users. This is because the script reads directly from `/dev/input` which could otherwise enable keylogging and event spoofing.
 
 Second, add the following near the bottom of your `sudoers` file:
 `ben ALL=(ben:input) NOPASSWD: /home/ben/bin/touchpadDisable.py`
 
-Third, configure your window manager to executet he following command on startup:
+Third, configure your window manager to execute the following command on startup:
 `sudo -g input /home/ben/bin/touchpadDisable.py`
 
 Edit all values as appropriate. Enjoy!
