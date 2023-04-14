@@ -6,7 +6,7 @@ import time
 import threading
 import l5p_kbl
 
-MODIFIER_KEYS = {42, 29, 56, 100, 97, 54, 15}
+MODIFIER_KEYS = {42, 29, 56, 100, 97, 54, 15, 125}
 REENABLE_DELAY_TOUCHPAD = 0.5
 REENABLE_DELAY_RGB = 5
 COLOR_PERFORMANCE = '600000'
@@ -53,7 +53,8 @@ def reenableTouchpad():
     while run:
         time.sleep(expireTimeTouchpad - time.time())
         if time.time() >= expireTimeTouchpad:
-            os.system('synclient HorizHysteresis=8 VertHysteresis=8 TapButton1=1 TapButton2=3')
+#            os.system('synclient HorizHysteresis=8 VertHysteresis=8 TapButton1=1 TapButton2=3')
+            os.system('echo 0018:06CB:CE78.0008 | tee /sys/bus/hid/drivers/hid-multitouch/bind > /dev/null')
             run = False
             
 def turnOff():
@@ -85,6 +86,7 @@ while 1:
         if code not in MODIFIER_KEYS:
             expireTimeTouchpad = time.time() + REENABLE_DELAY_TOUCHPAD
             if not tt.is_alive():
-                os.system('synclient HorizHysteresis=5000 VertHysteresis=5000 TapButton1=0 TapButton2=0')
+#                os.system('synclient HorizHysteresis=5000 VertHysteresis=5000 TapButton1=0 TapButton2=0')
+                os.system('echo 0018:06CB:CE78.0008 | tee /sys/bus/hid/drivers/hid-multitouch/unbind > /dev/null')
                 tt = threading.Thread(target=reenableTouchpad)
                 tt.start()
