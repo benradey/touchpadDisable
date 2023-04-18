@@ -53,8 +53,9 @@ def reenableTouchpad():
     while run:
         time.sleep(expireTimeTouchpad - time.time())
         if time.time() >= expireTimeTouchpad:
-#            os.system('synclient HorizHysteresis=8 VertHysteresis=8 TapButton1=1 TapButton2=3')
-            os.system('echo 0018:06CB:CE78.0008 | tee /sys/bus/hid/drivers/hid-multitouch/bind > /dev/null')
+            #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 345 1')
+            os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 1 2 3 4 5 6 7')
+            os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 0')
             run = False
             
 def turnOff():
@@ -86,7 +87,8 @@ while 1:
         if code not in MODIFIER_KEYS:
             expireTimeTouchpad = time.time() + REENABLE_DELAY_TOUCHPAD
             if not tt.is_alive():
-#                os.system('synclient HorizHysteresis=5000 VertHysteresis=5000 TapButton1=0 TapButton2=0')
-                os.system('echo 0018:06CB:CE78.0008 | tee /sys/bus/hid/drivers/hid-multitouch/unbind > /dev/null')
+                #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 345 0')
+                os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 0 0 0 4 5 6 7')
+                os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 -1')
                 tt = threading.Thread(target=reenableTouchpad)
                 tt.start()
