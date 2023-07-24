@@ -12,6 +12,8 @@ REENABLE_DELAY_RGB = 5
 COLOR_PERFORMANCE = '600000'
 COLOR_QUIET = '000060'
 COLOR_BALANCED = '606060'
+POWERMODE_PERFORMANCE = '3'
+POWERMODE_QUIET = '1'
 
 controller = l5p_kbl.LedController()
 rgb_on_performance = controller.build_control_string(
@@ -74,9 +76,9 @@ while 1:
     (seconds, useconds, type, code, value) = struct.unpack('llHHI', data)
     if type == 1 and value != 0:
         powermode = open("/sys/module/legion_laptop/drivers/platform:legion/PNP0C09:00/powermode", "r").read(1)
-        if powermode == '1':
+        if powermode == POWERMODE_PERFORMANCE:
             controller.send_control_string(rgb_on_performance)
-        elif powermode == '2':
+        elif powermode == POWERMODE_QUIET:
             controller.send_control_string(rgb_on_quiet)
         else:
             controller.send_control_string(rgb_on_balanced)
