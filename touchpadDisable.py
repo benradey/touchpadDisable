@@ -56,8 +56,11 @@ def reenableTouchpad():
         time.sleep(expireTimeTouchpad - time.time())
         if time.time() >= expireTimeTouchpad:
             #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 345 1')
-            os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 1 2 3 4 5 6 7')
-            os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 0')
+            
+            #os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 1 2 3 4 5 6 7')
+            #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 0')
+            
+            os.system('xinput reattach "SYNA2BA6:00 06CB:CE78 Touchpad" "Virtual core pointer"')
             run = False
             
 def turnOff():
@@ -90,7 +93,10 @@ while 1:
             expireTimeTouchpad = time.time() + REENABLE_DELAY_TOUCHPAD
             if not tt.is_alive():
                 #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 345 0')
-                os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 0 0 0 4 5 6 7')
-                os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 -1')
+                
+                #os.system('xinput set-button-map "SYNA2BA6:00 06CB:CE78 Touchpad" 0 0 0 4 5 6 7')
+                #os.system('xinput set-prop "SYNA2BA6:00 06CB:CE78 Touchpad" 330 -1')
+                
+                os.system('xinput float "SYNA2BA6:00 06CB:CE78 Touchpad"')
                 tt = threading.Thread(target=reenableTouchpad)
                 tt.start()
