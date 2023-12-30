@@ -46,7 +46,7 @@ rgb_off = controller.build_control_string(
 )
 
 controller.send_control_string(rgb_off)
-f = open( "/dev/input/event4", "rb" ); # Open the file in the read-binary mode
+f = open( "/dev/input/by-id/usb-ITE_Tech._Inc._ITE_Device_8910_-event-kbd", "rb" ); # Open the file in the read-binary mode
 expireTimeTouchpad = 0
 expireTimeRgb = 0
 
